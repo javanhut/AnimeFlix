@@ -1,0 +1,274 @@
+.series-container {
+  background-color: #141414;
+  min-height: 100vh;
+  color: white;
+  padding-top: 70px;
+}
+
+.series-header {
+  text-align: center;
+  padding: 3rem 4rem 2rem;
+  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+  margin-bottom: 3rem;
+}
+
+.series-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.series-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.genre-sections {
+  padding: 0 4rem 4rem;
+}
+
+.genre-section {
+  margin-bottom: 4rem;
+}
+
+.genre-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-right: 1rem;
+}
+
+.genre-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #e5e5e5;
+  margin: 0;
+  position: relative;
+}
+
+.genre-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: #2563eb;
+  border-radius: 2px;
+}
+
+.genre-carousel-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carousel-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.carousel-btn:active {
+  transform: scale(0.95);
+}
+
+.genre-carousel {
+  position: relative;
+}
+
+.genre-content-slider {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 1rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.genre-content-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.series-card {
+  flex-shrink: 0;
+  width: 200px;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.series-card:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.series-card:hover .card-image img {
+  transform: scale(1.1);
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.3) 70%,
+    transparent 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.series-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.play-button {
+  background: rgba(255, 255, 255, 0.2);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+}
+
+.play-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.play-button i {
+  font-size: 1.5rem;
+  color: white;
+  margin-left: 2px;
+}
+
+.card-info-overlay {
+  text-align: center;
+  width: 100%;
+}
+
+.card-info-overlay h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #b3b3b3;
+}
+
+.loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  font-size: 1.2rem;
+  color: #b3b3b3;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .series-header {
+    padding: 2rem 2rem 1.5rem;
+  }
+  
+  .series-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .genre-sections {
+    padding: 0 2rem 2rem;
+  }
+  
+  .series-card {
+    width: 180px;
+    height: 270px;
+  }
+}
+
+@media (max-width: 768px) {
+  .series-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .series-header h1 {
+    font-size: 2rem;
+  }
+  
+  .genre-sections {
+    padding: 0 1rem 2rem;
+  }
+  
+  .genre-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .series-card {
+    width: 160px;
+    height: 240px;
+  }
+  
+  .genre-title {
+    font-size: 1.5rem;
+  }
+}

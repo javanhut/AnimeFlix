@@ -1,0 +1,213 @@
+{
+  "featured": {
+    "id": "featured-1",
+    "title": "Attack on Titan",
+    "description": "Humanity fights for survival against giant humanoid Titans. Join Eren Yeager and his friends as they discover the truth behind the walls that protect their city.",
+    "genre": ["Action", "Drama", "Fantasy"],
+    "year": 2013,
+    "rating": "TV-MA",
+    "duration": "24 min",
+    "episodes": 87,
+    "type": "series",
+    "backdrop": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop",
+    "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=450&fit=crop",
+    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "trailer": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "seasons": {
+      "1": [
+        {
+          "id": "aot-s1-e1",
+          "title": "To You, in 2000 Years",
+          "description": "For over a century, humans have been living in settlements surrounded by enormous walls, protecting them from the giant humanoids known as Titans.",
+          "duration": "24 min",
+          "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop",
+          "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        },
+        {
+          "id": "aot-s1-e2",
+          "title": "That Day",
+          "description": "Two years after the fall of Wall Maria, Eren attempts to prove his worth in the TrainingCorps.",
+          "duration": "24 min",
+          "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop",
+          "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        },
+        {
+          "id": "aot-s1-e3",
+          "title": "A Dim Light Amid Despair",
+          "description": "Eren begins his training with the other cadets and quickly finds his shortcomings as a soldier.",
+          "duration": "24 min",
+          "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop",
+          "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+        }
+      ],
+      "2": [
+        {
+          "id": "aot-s2-e1",
+          "title": "Beast Titan",
+          "description": "A new type of Titan appears and begins coordinating the others in an attack on the soldiers.",
+          "duration": "24 min",
+          "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop",
+          "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+        },
+        {
+          "id": "aot-s2-e2",
+          "title": "I'm Home",
+          "description": "Sasha goes back to her hometown and must face her past while protecting her family.",
+          "duration": "24 min",
+          "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop",
+          "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+        }
+      ]
+    }
+  },
+  "categories": {
+    "trending": [
+      {
+        "id": "1",
+        "title": "Demon Slayer",
+        "description": "A young boy becomes a demon slayer to save his sister and avenge his family.",
+        "genre": ["Action", "Supernatural"],
+        "year": 2019,
+        "rating": "TV-14",
+        "duration": "24 min",
+        "episodes": 44,
+        "type": "series",
+        "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "seasons": {
+          "1": [
+            {
+              "id": "ds-s1-e1",
+              "title": "Cruelty",
+              "description": "Tanjiro sells charcoal in town and returns to find his family slaughtered by a demon.",
+              "duration": "24 min",
+              "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            },
+            {
+              "id": "ds-s1-e2",
+              "title": "Trainer Sakonji Urokodaki",
+              "description": "Tanjiro encounters a demon slayer who sends him to train under Sakonji Urokodaki.",
+              "duration": "24 min",
+              "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+            }
+          ]
+        }
+      },
+      {
+        "id": "2",
+        "title": "My Hero Academia",
+        "description": "In a world where superpowers are the norm, one boy dreams of becoming a hero.",
+        "genre": ["Action", "Superhero"],
+        "year": 2016,
+        "rating": "TV-14",
+        "duration": "24 min",
+        "episodes": 138,
+        "thumbnail": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      },
+      {
+        "id": "3",
+        "title": "Jujutsu Kaisen",
+        "description": "Students battle cursed spirits in this supernatural action series.",
+        "genre": ["Action", "Supernatural"],
+        "year": 2020,
+        "rating": "TV-MA",
+        "duration": "24 min",
+        "episodes": 24,
+        "thumbnail": "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      },
+      {
+        "id": "4",
+        "title": "One Piece",
+        "description": "Follow Monkey D. Luffy's quest to become the Pirate King.",
+        "genre": ["Adventure", "Comedy"],
+        "year": 1999,
+        "rating": "TV-14",
+        "duration": "24 min",
+        "episodes": 1000,
+        "thumbnail": "https://images.unsplash.com/photo-1566228015668-4c45dbc4e2f5?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      },
+      {
+        "id": "5",
+        "title": "Spirited Away",
+        "description": "A young girl enters a world ruled by gods and witches.",
+        "genre": ["Adventure", "Family"],
+        "year": 2001,
+        "rating": "PG",
+        "duration": "125 min",
+        "episodes": 1,
+        "type": "movie",
+        "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      }
+    ],
+    "action": [
+      {
+        "id": "6",
+        "title": "Dragon Ball Z",
+        "description": "Goku and friends defend Earth from powerful enemies.",
+        "genre": ["Action", "Adventure"],
+        "year": 1989,
+        "rating": "TV-PG",
+        "duration": "24 min",
+        "episodes": 291,
+        "thumbnail": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      },
+      {
+        "id": "7",
+        "title": "Fullmetal Alchemist",
+        "description": "Two brothers search for the Philosopher's Stone.",
+        "genre": ["Action", "Drama"],
+        "year": 2003,
+        "rating": "TV-14",
+        "duration": "24 min",
+        "episodes": 64,
+        "thumbnail": "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      },
+      {
+        "id": "8",
+        "title": "Bleach",
+        "description": "A teenager gains Soul Reaper powers to protect spirits.",
+        "genre": ["Action", "Supernatural"],
+        "year": 2004,
+        "rating": "TV-14",
+        "duration": "24 min",
+        "episodes": 366,
+        "thumbnail": "https://images.unsplash.com/photo-1566228015668-4c45dbc4e2f5?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      }
+    ],
+    "romance": [
+      {
+        "id": "9",
+        "title": "Your Name",
+        "description": "Two teenagers share a profound, magical connection.",
+        "genre": ["Romance", "Drama"],
+        "year": 2016,
+        "rating": "PG",
+        "duration": "106 min",
+        "episodes": 1,
+        "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      },
+      {
+        "id": "10",
+        "title": "Kaguya-sama: Love is War",
+        "description": "Two student council members engage in a battle of wits.",
+        "genre": ["Romance", "Comedy"],
+        "year": 2019,
+        "rating": "TV-14",
+        "duration": "24 min",
+        "episodes": 37,
+        "thumbnail": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=300&h=450&fit=crop",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      }
+    ]
+  }
+}

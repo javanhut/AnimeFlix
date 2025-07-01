@@ -1,0 +1,403 @@
+.new-season-container {
+  padding: 80px 20px 20px;
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: white;
+}
+
+.season-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.season-header h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: linear-gradient(45deg, #1e40af, #3b82f6, #06d6a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.season-header p {
+  font-size: 1.2rem;
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.current-season-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(45deg, #06d6a0, #1e40af);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(6, 214, 160, 0.3);
+}
+
+/* Filter Controls */
+.season-filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: #141414;
+  border-radius: 12px;
+  border: 1px solid #333;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  color: #e5e5e5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+}
+
+.filter-select {
+  background: #2c2c2c;
+  color: white;
+  border: 2px solid #444;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #1e40af;
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.2);
+}
+
+.filter-select:hover {
+  border-color: #1e40af;
+}
+
+.clear-filters-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clear-filters-btn:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+/* Content Organization */
+.seasonal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.year-section {
+  background: #141414;
+  border-radius: 12px;
+  padding: 30px;
+  border: 1px solid #333;
+}
+
+.year-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #3b82f6;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 2px solid #2c2c2c;
+  padding-bottom: 10px;
+}
+
+.current-year-badge {
+  background: #06d6a0;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.season-section {
+  margin-bottom: 35px;
+}
+
+.season-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #e5e5e5;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.season-title i {
+  color: #06d6a0;
+  font-size: 1.2rem;
+}
+
+.current-season-indicator {
+  color: #06d6a0;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-left: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.content-count {
+  color: #888;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-left: auto;
+}
+
+/* Content Grid */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.content-card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.content-card:hover {
+  transform: scale(1.05);
+}
+
+.card-image {
+  position: relative;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.content-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.play-button {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  transition: transform 0.2s ease;
+}
+
+.play-button:hover {
+  transform: scale(1.1);
+}
+
+.play-button i {
+  font-size: 24px;
+  color: #000;
+  margin-left: 3px;
+}
+
+.card-info-overlay {
+  text-align: center;
+  padding: 0 15px;
+}
+
+.card-info-overlay h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+.card-season-info {
+  margin-top: 8px;
+}
+
+.season-badge {
+  background: linear-gradient(45deg, #1e40af, #06d6a0);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* No Content State */
+.no-content {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+}
+
+.no-content i {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.no-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+.no-content p {
+  font-size: 1.1rem;
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: white;
+  font-size: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .new-season-container {
+    padding: 80px 15px 15px;
+  }
+  
+  .season-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .season-filters {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 15px;
+  }
+  
+  .filter-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .filter-select {
+    min-width: 120px;
+  }
+  
+  .year-section {
+    padding: 20px;
+  }
+  
+  .year-title {
+    font-size: 1.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .season-title {
+    font-size: 1.4rem;
+    flex-wrap: wrap;
+  }
+  
+  .content-count {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+  
+  .content-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+  
+  .play-button {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .play-button i {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .season-header h1 {
+    font-size: 2rem;
+  }
+  
+  .current-season-badge {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+  
+  .content-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}

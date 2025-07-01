@@ -1,0 +1,535 @@
+.episode-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+.episode-modal {
+  background: #141414;
+  border-radius: 8px;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 900px;
+  overflow: hidden;
+  position: relative;
+  color: white;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  z-index: 200;
+  transition: background-color 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* Modal Banner Section */
+.modal-banner {
+  background: #141414;
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+}
+
+.banner-image-container {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.banner-top-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 150;
+  pointer-events: auto;
+}
+
+.banner-top-hover:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.banner-bottom-hover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 140;
+  pointer-events: auto;
+}
+
+.banner-bottom-hover:hover {
+  opacity: 1;
+}
+
+.banner-info {
+  text-align: center;
+  color: white;
+  padding: 1rem 2rem;
+  max-width: 80%;
+  margin-top: 1rem;
+}
+
+.banner-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #2563eb;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.banner-info .release-date {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: #e5e5e5;
+}
+
+.banner-info .banner-description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #d1d5db;
+  margin: 0;
+}
+
+.modal-content-info {
+  padding: 0.75rem 1.5rem;
+  background: rgba(20, 20, 20, 0.95);
+  color: white;
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.modal-meta {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.modal-meta .rating,
+.modal-meta .year,
+.modal-meta .type {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.modal-description {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  color: #d1d5db;
+}
+
+.modal-genres {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.modal-actions .btn,
+.header-controls .btn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.modal-actions .btn-play {
+  background: #1e40af;
+  color: white;
+}
+
+.modal-actions .btn-play:hover {
+  background: #1d4ed8;
+}
+
+.modal-actions .btn-info,
+.header-controls .btn-info {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.modal-actions .btn-info:hover,
+.header-controls .btn-info:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Episodes Section */
+.modal-episodes {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  min-height: 0;
+}
+
+.episodes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.view-toggle {
+  display: flex;
+  background: #2c2c2c;
+  border-radius: 6px;
+  padding: 4px;
+  gap: 2px;
+}
+
+.toggle-btn {
+  background: transparent;
+  border: none;
+  color: #b3b3b3;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.toggle-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+.toggle-btn i {
+  font-size: 0.8rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.season-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.season-selector label {
+  font-weight: 600;
+  color: #e5e5e5;
+}
+
+.season-dropdown {
+  background: #2c2c2c;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.season-dropdown:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.btn-play-episodes {
+  background: #1e40af;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-play-episodes:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
+}
+
+.btn-play-episodes i {
+  font-size: 0.9rem;
+}
+
+.episodes-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.episodes-list h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #e5e5e5;
+  margin: 0;
+}
+
+.episodes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.episode-card {
+  display: flex;
+  background: #2c2c2c;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.episode-card:hover {
+  background: #3c3c3c;
+  border-color: #2563eb;
+  transform: scale(1.02);
+}
+
+.episode-thumbnail {
+  position: relative;
+  width: 200px;
+  height: 112px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.episode-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.episode-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.episode-card:hover .episode-play-overlay {
+  opacity: 1;
+}
+
+.episode-play-overlay i {
+  font-size: 2rem;
+  color: white;
+}
+
+.episode-info {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.episode-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.episode-number {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2563eb;
+  min-width: 30px;
+}
+
+.episode-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  flex: 1;
+  margin: 0;
+}
+
+.episode-duration {
+  font-size: 0.9rem;
+  color: #b3b3b3;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+}
+
+.episode-description {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #b3b3b3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom Scrollbar */
+.modal-episodes::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-episodes::-webkit-scrollbar-track {
+  background: #141414;
+}
+
+.modal-episodes::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.modal-episodes::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .episode-modal {
+    width: 95vw;
+    max-height: 95vh;
+  }
+  
+  .banner-image-container {
+    height: 300px;
+  }
+  
+  .modal-content-info {
+    padding: 0.5rem 1rem;
+  }
+  
+  .modal-title {
+    font-size: 1.2rem;
+  }
+  
+  .modal-episodes {
+    padding: 1rem;
+  }
+  
+  .episode-card {
+    flex-direction: column;
+  }
+  
+  .episode-thumbnail {
+    width: 100%;
+    height: 150px;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .modal-actions .btn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-title {
+    font-size: 1.5rem;
+  }
+  
+  .modal-description {
+    font-size: 1rem;
+  }
+  
+  .episode-thumbnail {
+    height: 120px;
+  }
+}

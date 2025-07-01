@@ -1,0 +1,192 @@
+.mylist-container {
+  padding: 80px 20px 20px;
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: white;
+}
+
+.mylist-header {
+  margin-bottom: 30px;
+}
+
+.mylist-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.mylist-header p {
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.empty-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+}
+
+.empty-list i {
+  font-size: 4rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.empty-list h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+.empty-list p {
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.mylist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.mylist-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.mylist-card:hover {
+  transform: scale(1.05);
+}
+
+.card-image {
+  position: relative;
+  cursor: pointer;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mylist-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.play-button {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  transition: transform 0.2s ease;
+}
+
+.play-button:hover {
+  transform: scale(1.1);
+}
+
+.play-button i {
+  font-size: 24px;
+  color: #000;
+  margin-left: 3px;
+}
+
+.card-info-overlay {
+  text-align: center;
+  padding: 0 15px;
+}
+
+.card-info-overlay h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #ccc;
+}
+
+.card-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
+
+.remove-btn {
+  background: rgba(0, 0, 0, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: rgba(220, 20, 60, 0.9);
+}
+
+.remove-btn i {
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .mylist-container {
+    padding: 80px 15px 15px;
+  }
+  
+  .mylist-header h1 {
+    font-size: 2rem;
+  }
+  
+  .mylist-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+  
+  .play-button {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .play-button i {
+    font-size: 20px;
+  }
+}

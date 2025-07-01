@@ -1,0 +1,162 @@
+.settings-container {
+  min-height: 100vh;
+  background-color: #141414;
+  color: white;
+  padding-top: 70px;
+}
+
+.settings-header {
+  padding: 2rem 4%;
+  border-bottom: 1px solid #333;
+}
+
+.settings-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.settings-content {
+  display: flex;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  height: calc(100vh - 140px);
+}
+
+.settings-sidebar {
+  flex: 0 0 250px;
+  background: #1f1f1f;
+  border-right: 1px solid #333;
+  padding: 2rem 0;
+}
+
+.settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.settings-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: none;
+  color: #b3b3b3;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 0;
+  border-right: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.settings-nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.settings-nav-item.active {
+  background: rgba(37, 99, 235, 0.2);
+  color: white;
+  border-right-color: #2563eb;
+}
+
+.settings-nav-item i {
+  font-size: 1.2rem;
+  width: 1.5rem;
+}
+
+.settings-panel {
+  flex: 1;
+  background: #141414;
+  padding: 0;
+  overflow: hidden;
+}
+
+.settings-section {
+  padding: 2rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.settings-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.settings-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.settings-label span {
+  flex: 1;
+}
+
+.settings-input,
+.settings-select {
+  background: #2c2c2c;
+  border: 1px solid #444;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 300px;
+}
+
+.settings-input:focus,
+.settings-select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.settings-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.settings-select {
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .settings-sidebar {
+    flex: none;
+  }
+  
+  .settings-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .settings-nav-item {
+    white-space: nowrap;
+    padding: 0.75rem 1rem;
+  }
+  
+  .settings-input,
+  .settings-select {
+    width: 100%;
+    max-width: 300px;
+  }
+}
