@@ -1,0 +1,58 @@
+# Spirited Away Movie Configuration
+id = "spirited_away"
+title = "Spirited Away"
+description = "A young girl enters a world ruled by gods and witches, where humans are changed into beasts."
+year = 2001
+rating = "PG"
+duration = "125 min"
+featured = false
+
+# Genres for categorization
+genres = ["Adventure", "Family", "Fantasy"]
+
+# Visual assets
+thumbnail = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=450&fit=crop"
+backdrop = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop"
+
+# Production information
+studio = "Studio Ghibli"
+director = "Hayao Miyazaki"
+writer = "Hayao Miyazaki"
+music = "Joe Hisaishi"
+
+# Awards and recognition
+awards = [
+  "Academy Award for Best Animated Feature",
+  "Golden Bear at Berlin International Film Festival"
+]
+
+# Additional metadata
+mal_id = 199
+imdb_id = "tt0245429"
+box_office = "$395.8 million"
+budget = "$19 million"
+
+[cast]
+main_characters = [
+  "Chihiro Ogino",
+  "Haku",
+  "Yubaba",
+  "No-Face"
+]
+
+voice_actors_japanese = [
+  "Rumi Hiiragi as Chihiro",
+  "Miyu Irino as Haku", 
+  "Mari Natsuki as Yubaba"
+]
+
+voice_actors_english = [
+  "Daveigh Chase as Chihiro",
+  "Jason Marsden as Haku",
+  "Suzanne Pleshette as Yubaba"
+]
+
+[technical]
+format = "2D Animation"
+aspect_ratio = "1.85:1"
+sound = "Dolby Digital"

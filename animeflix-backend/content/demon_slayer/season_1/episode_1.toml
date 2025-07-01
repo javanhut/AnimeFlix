@@ -1,0 +1,16 @@
+# Episode 1
+title = "Episode 1"
+description = "Demon Slayer Season 1 Episode 1"
+air_date = "2025-06-28"
+duration = "24 min"
+
+# Episode-specific metadata
+synopsis = "Episode synopsis goes here."
+
+# Production notes
+director = "Episode Director"
+writer = "Episode Writer"
+
+# Viewer ratings
+rating = 8
+total_votes = 1000

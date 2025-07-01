@@ -1,0 +1,16 @@
+# Episode 2
+title = "Episode 2"
+description = "Demon Slayer Season 2 Episode 2"
+air_date = "2025-06-28"
+duration = "24 min"
+
+# Episode-specific metadata
+synopsis = "Episode synopsis goes here."
+
+# Production notes
+director = "Episode Director"
+writer = "Episode Writer"
+
+# Viewer ratings
+rating = 8
+total_votes = 1000

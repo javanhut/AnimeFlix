@@ -1,0 +1,16 @@
+# Episode 3
+title = "Episode 3"
+description = "Demon Slayer Season 2 Episode 3"
+air_date = "2025-06-28"
+duration = "24 min"
+
+# Episode-specific metadata
+synopsis = "Episode synopsis goes here."
+
+# Production notes
+director = "Episode Director"
+writer = "Episode Writer"
+
+# Viewer ratings
+rating = 8
+total_votes = 1000

@@ -1,0 +1,38 @@
+# Demon Slayer Series Configuration
+id = "demon_slayer"
+title = "Demon Slayer"
+description = "Demon Slayer description goes here."
+year = 2019
+rating = "TV-14"
+episode_duration = "24 min"
+featured = false
+
+# Genres for categorization
+genres = ["Action","Drama"]
+
+# Visual assets
+thumbnail = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=450&fit=crop"
+backdrop = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop"
+episode_thumbnail = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop"
+
+# Release information
+studio = "Studio Name"
+status = "Ongoing"
+total_episodes = 12
+total_seasons = 2
+
+[cast]
+main_characters = ["Character 1","Character 2"]
+
+[production]
+director = "Director Name"
+writer = "Writer Name"
+music = "Composer Name"
+
+# Season-specific information
+[[seasons]]
+number = 1
+title = "Demon Slayer"
+year = 2019
+episodes = 12
+description = "Season 1 description"

@@ -1,0 +1,14 @@
+{
+  "name": "animeflix",
+  "version": "1.0.0",
+  "description": "AnimeFlix full-stack application",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd animeflix-backend && npm start",
+    "frontend": "cd animeflix-frontend && npm install && npm start",
+    "install-all": "npm install && cd animeflix-backend && npm install && cd ../animeflix-frontend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

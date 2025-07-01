@@ -1,0 +1,69 @@
+# Attack on Titan Series Configuration
+id = "attack_on_titan"
+title = "Attack on Titan"
+description = "Humanity fights for survival against giant humanoid Titans. Join Eren Yeager and his friends as they discover the truth behind the walls that protect their city."
+year = 2013
+rating = "TV-MA"
+episode_duration = "24 min"
+featured = true
+
+# Genres for categorization
+genres = ["Action", "Drama", "Fantasy"]
+
+# Visual assets
+thumbnail = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=450&fit=crop"
+backdrop = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop"
+episode_thumbnail = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=169&fit=crop"
+
+# Release information
+studio = "Toei Animation"
+status = "Completed"
+total_episodes = 87
+total_seasons = 4
+
+# Additional metadata
+mal_id = 16498
+imdb_id = "tt2560140"
+release_schedule = "weekly"
+
+[cast]
+main_characters = [
+  "Eren Yeager",
+  "Mikasa Ackerman", 
+  "Armin Arlert",
+  "Levi Ackerman"
+]
+
+[production]
+director = "Tetsuro Araki"
+writer = "Hajime Isayama"
+music = "Hiroyuki Sawano"
+
+# Season-specific information
+[[seasons]]
+number = 1
+title = "Attack on Titan"
+year = 2013
+episodes = 25
+description = "The beginning of humanity's fight against the Titans"
+
+[[seasons]]
+number = 2
+title = "Attack on Titan Season 2"  
+year = 2017
+episodes = 12
+description = "The mystery of the Titans deepens"
+
+[[seasons]]
+number = 3
+title = "Attack on Titan Season 3"
+year = 2018
+episodes = 22
+description = "The truth about the walls is revealed"
+
+[[seasons]]
+number = 4
+title = "Attack on Titan: The Final Season"
+year = 2020
+episodes = 28
+description = "The final battle for humanity's freedom"
