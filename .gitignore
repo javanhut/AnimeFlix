@@ -1,0 +1,113 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production builds
+animeflix-frontend/build/
+animeflix-frontend/dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.development
+
+# Logs
+*.log
+logs/
+animeflix-backend/logs/
+animeflix-backend/backend.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary files
+tmp/
+temp/
+animeflix-backend/temp/
+
+# Cache directories
+.cache/
+animeflix-backend/video-cache/
+.eslintcache
+
+# Video files (should be managed through volumes)
+animeflix-backend/videos/*.mp4
+animeflix-backend/videos/*.mkv
+animeflix-backend/videos/*.avi
+animeflix-backend/videos/*.webm
+
+# Content uploads (except sample content)
+animeflix-backend/content/*/season_*/
+animeflix-backend/content/*/*.mp4
+animeflix-backend/content/*/*.mkv
+animeflix-backend/content/*/*.avi
+animeflix-backend/content/*/*.webm
+# But keep the TOML config files
+!animeflix-backend/content/*/series_details.toml
+!animeflix-backend/content/*/movie_details.toml
+!animeflix-backend/content/*/season_*/episode_*.toml
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Container/Volume data
+volumes/
+mnt/
+
+# Backup files
+backups/
+*.backup
+*.bak
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Package manager files
+.npm
+.yarn-integrity
+yarn.lock
+
+# Local development
+.local/
+
+# Debug files
+debug-*.html
+test-*.html
+*.test.js
+*.spec.js
+
+# Documentation builds
+docs/build/
+
+CLAUDE.md
