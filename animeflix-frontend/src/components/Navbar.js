@@ -27,30 +27,42 @@ const Navbar = () => {
 
   useEffect(() => {
     if (searchQuery.trim()) {
-      const timeoutId = setTimeout(() => {
+      const timeoutId = setTimeout(async () => {
         try {
-          // Use the comprehensive search function
-          const results = searchContent(searchQuery);
+          // Use backend API for real content search
+          const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3051'}/api/search?q=${encodeURIComponent(searchQuery)}`);
+          const data = await response.json();
           
           // Format results for display and limit to 8 results
-          const formattedResults = results.slice(0, 8).map(content => ({
+          const formattedResults = data.results.slice(0, 8).map(content => ({
             id: content.id,
             title: content.title,
-            year: content.year,
-            genre: content.genres,
-            thumbnail: content.thumbnail,
-            type: content.type
+            year: content.year || new Date().getFullYear(),
+            genre: content.genres || [],
+            thumbnail: content.thumbnail || '/placeholder-thumbnail.jpg',
+            type: content.type || 'series'
           }));
 
           setSearchResults(formattedResults);
-
-          // For production API, replace the above with:
-          // const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3051'}/api/search?q=${encodeURIComponent(searchQuery)}`);
-          // const data = await response.json();
-          // setSearchResults(data.results.slice(0, 8));
         } catch (error) {
           console.error('Search error:', error);
-          setSearchResults([]);
+          
+          // Fallback to static database if API fails
+          try {
+            const results = searchContent(searchQuery);
+            const formattedResults = results.slice(0, 8).map(content => ({
+              id: content.id,
+              title: content.title,
+              year: content.year,
+              genre: content.genres,
+              thumbnail: content.thumbnail,
+              type: content.type
+            }));
+            setSearchResults(formattedResults);
+          } catch (fallbackError) {
+            console.error('Fallback search error:', fallbackError);
+            setSearchResults([]);
+          }
         }
       }, 200);
       return () => clearTimeout(timeoutId);

@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MigratorTool from './MigratorTool';
 import ContentEditor from './ContentEditor';
+import FullscreenSettings from './FullscreenSettings';
+import fullscreenManager from '../utils/fullscreenManager';
 import './Settings.css';
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('general');
+  const [autoFullscreenEnabled, setAutoFullscreenEnabled] = useState(false);
+
+  useEffect(() => {
+    const autoFullscreen = fullscreenManager.getAutoFullscreenSetting();
+    setAutoFullscreenEnabled(autoFullscreen);
+  }, []);
+
+  const handleAutoFullscreenToggle = (enabled) => {
+    fullscreenManager.setAutoFullscreenSetting(enabled);
+    setAutoFullscreenEnabled(enabled);
+    
+    // If disabling, also reset permission
+    if (!enabled) {
+      fullscreenManager.resetPermission();
+    }
+  };
 
   return (
     <div className="settings-container">
@@ -70,7 +88,19 @@ const Settings = () => {
                   <span>Skip Intro</span>
                   <input type="checkbox" className="settings-checkbox" />
                 </label>
+                
+                <label className="settings-label">
+                  <span>Auto-Fullscreen</span>
+                  <input 
+                    type="checkbox" 
+                    className="settings-checkbox" 
+                    checked={autoFullscreenEnabled}
+                    onChange={(e) => handleAutoFullscreenToggle(e.target.checked)}
+                  />
+                </label>
               </div>
+              
+              <FullscreenSettings />
             </div>
           )}
           

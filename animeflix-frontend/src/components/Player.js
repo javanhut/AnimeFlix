@@ -1,7 +1,9 @@
 import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import './Player.css';
+import fullscreenManager from '../utils/fullscreenManager';
+// import videoPrefetchManager from '../utils/videoPrefetch'; // TODO: Implement prefetching
 
-const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
+const Player = forwardRef(({ video, onVideoEnd, autoPlay = false, mutedAutoPlay = true }, ref) => {
   const videoRef = useRef(null);
   const playerContainerRef = useRef(null);
   const progressRef = useRef(null);
@@ -22,45 +24,132 @@ const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
   const [skipFeedback, setSkipFeedback] = useState({ show: false, direction: '', amount: 0 });
   const [isPiPSupported, setIsPiPSupported] = useState(false);
   const [isPiPActive, setIsPiPActive] = useState(false);
+  const [showMutedNotice, setShowMutedNotice] = useState(false);
+  const [userManuallyExitedFullscreen, setUserManuallyExitedFullscreen] = useState(false);
+  const [wasFullscreenBeforeTransition, setWasFullscreenBeforeTransition] = useState(false);
 
-  // Expose methods to parent component via ref
   useImperativeHandle(ref, () => ({
-    playAndFullscreen: () => {
-      setIsPlaying(true);
-      if (playerContainerRef.current && !isFullScreen) {
-        if (playerContainerRef.current.requestFullscreen) {
-          playerContainerRef.current.requestFullscreen().catch(err => {
-            console.log('Fullscreen request failed:', err);
-          });
-        } else if (playerContainerRef.current.mozRequestFullScreen) {
-          playerContainerRef.current.mozRequestFullScreen().catch(err => {
-            console.log('Fullscreen request failed:', err);
-          });
-        } else if (playerContainerRef.current.webkitRequestFullscreen) {
-          playerContainerRef.current.webkitRequestFullscreen().catch(err => {
-            console.log('Fullscreen request failed:', err);
-          });
-        } else if (playerContainerRef.current.msRequestFullscreen) {
-          playerContainerRef.current.msRequestFullscreen().catch(err => {
-            console.log('Fullscreen request failed:', err);
-          });
-        }
+    // Expose any methods that need to be called from the parent component
+  }));
+
+  // Calculate the final video URL
+  const finalVideoUrl = React.useMemo(() => {
+    if (!video) return '';
+    
+    // Handle new video format with multiple sources
+    if (video.videoSources && video.videoSources[currentLanguage]) {
+      const url = video.videoSources[currentLanguage];
+      return url.startsWith('http') ? url : `http://localhost:3051${url}`;
+    }
+    
+    // Handle legacy video format
+    if (video.videoUrl) {
+      // If it's already a full HTTP URL, use it directly
+      if (video.videoUrl.startsWith('http')) {
+        return video.videoUrl;
+      }
+      // Otherwise, prepend the local server URL
+      return `http://localhost:3051${video.videoUrl}`;
+    }
+    
+    return '';
+  }, [video, currentLanguage]);
+
+  // Handle video source changes and autoplay
+  useEffect(() => {
+    if (videoRef.current && finalVideoUrl) {
+      console.log('🔄 Setting video source:', finalVideoUrl);
+      console.log('🔄 AutoPlay prop value:', autoPlay);
+      
+      // Remember fullscreen state before transition for auto-next
+      if (autoPlay && isFullScreen) {
+        setWasFullscreenBeforeTransition(true);
+        console.log('📝 Remembering fullscreen state for auto-next transition');
+      }
+      
+      // Reset manual exit flag for new video
+      if (!autoPlay) {
+        // Only reset if this is a manually selected video (not auto-next)
+        setUserManuallyExitedFullscreen(false);
+        setWasFullscreenBeforeTransition(false);
+      }
+      
+      videoRef.current.src = finalVideoUrl;
+      videoRef.current.load(); // Reload the video element with new source
+      
+      // Trigger autoplay if enabled
+      if (autoPlay) {
+        console.log('🎬 Triggering autoplay for new video source');
+        // Wait for video to be ready then start playing
+        const handleCanPlay = async () => {
+          console.log('✅ Video ready for autoplay');
+          
+          // For autoplay (auto-next), show fullscreen prompt if it was active before transition
+          if (!isFullScreen && !userManuallyExitedFullscreen && (wasFullscreenBeforeTransition || fullscreenManager.getAutoFullscreenSetting())) {
+            console.log('🔄 Auto-next episode detected - showing fullscreen prompt');
+            if (fullscreenManager.shouldPromptForAutoNext()) {
+              const promptShown = fullscreenManager.showAutoNextFullscreenPrompt(playerContainerRef.current);
+              if (promptShown) {
+                console.log('✅ Fullscreen prompt shown for auto-next episode');
+                setWasFullscreenBeforeTransition(false); // Reset flag
+              }
+            }
+          }
+          
+          setIsPlaying(true); // This will trigger the play useEffect
+          videoRef.current.removeEventListener('canplay', handleCanPlay);
+        };
+        videoRef.current.addEventListener('canplay', handleCanPlay);
       }
     }
-  }));
+  }, [finalVideoUrl, autoPlay]);
 
   useEffect(() => {
     if (videoRef.current) {
       if (isPlaying) {
-        videoRef.current.play().catch(error => {
-          console.error("Error attempting to play video:", error);
-          setIsPlaying(false);
-        });
+        // Log the video URL for debugging
+        console.log('▶️ Attempting to play video:', videoRef.current.src);
+        console.log('🎬 AutoPlay enabled:', autoPlay);
+        console.log('🔇 Muted AutoPlay enabled:', mutedAutoPlay);
+        
+        const playPromise = videoRef.current.play();
+        
+        // For autoplay, we don't have user gesture so no fullscreen attempt
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log('✅ Video play successful');
+          }).catch(error => {
+            if (error.name === 'NotAllowedError' && (autoPlay || mutedAutoPlay)) {
+              // Try playing muted as browsers allow muted autoplay
+              console.log('🔇 Trying muted autoplay due to browser policy');
+              videoRef.current.muted = true;
+              setIsMuted(true);
+              videoRef.current.play().then(() => {
+                // Show a message that video is muted
+                console.log('✅ Video playing muted due to browser autoplay policy');
+                setShowMutedNotice(true);
+                setTimeout(() => setShowMutedNotice(false), 3000);
+              }).catch(e => {
+                console.error('❌ Error attempting to play video muted:', e);
+                setIsPlaying(false);
+              });
+            } else if (error.name === 'NotSupportedError') {
+              console.error('❌ Video format not supported or URL is invalid:', videoRef.current.src);
+              console.error('❌ Full error:', error);
+              setHasError(true);
+              setErrorMessage('This video format is not supported by your browser or the file cannot be found.');
+              setIsPlaying(false);
+            } else {
+              console.error('❌ Error attempting to play video:', error);
+              setIsPlaying(false);
+            }
+          });
+        }
       } else {
         videoRef.current.pause();
       }
     }
-  }, [isPlaying, video]);
+  }, [isPlaying, autoPlay, mutedAutoPlay]);
 
   // Initialize language preference from video data or user preference
   useEffect(() => {
@@ -147,11 +236,7 @@ const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
     return languages;
   };
 
-  useEffect(() => {
-    if (autoPlay && videoRef.current) {
-      setIsPlaying(true);
-    }
-  }, [autoPlay, video]);
+  
 
   // Check Picture-in-Picture support
   useEffect(() => {
@@ -284,7 +369,27 @@ const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
 
   useEffect(() => {
     const handleFullScreenChange = () => {
-      setIsFullScreen(document.fullscreenElement != null);
+      const isCurrentlyFullscreen = document.fullscreenElement != null;
+      const wasFullscreen = isFullScreen;
+      setIsFullScreen(isCurrentlyFullscreen);
+      
+      // If fullscreen was lost and we should restore it (during auto-next)
+      if (wasFullscreen && !isCurrentlyFullscreen) {
+        if (wasFullscreenBeforeTransition && !userManuallyExitedFullscreen) {
+          // This is likely a browser-induced exit during video transition
+          console.log('🔄 Fullscreen lost during transition - will restore');
+          setTimeout(async () => {
+            if (!fullscreenManager.isCurrentlyFullscreen() && fullscreenManager.shouldPromptForAutoNext()) {
+              console.log('⚡ Showing fullscreen prompt after transition');
+              fullscreenManager.showAutoNextFullscreenPrompt(playerContainerRef.current);
+            }
+          }, 100);
+        } else if (isPlaying) {
+          // User manually exited - remember this choice
+          console.log('🔄 User manually exited fullscreen - remembering choice for this session');
+          setUserManuallyExitedFullscreen(true);
+        }
+      }
     };
 
     document.addEventListener('fullscreenchange', handleFullScreenChange);
@@ -298,7 +403,7 @@ const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
       document.removeEventListener('mozfullscreenchange', handleFullScreenChange);
       document.removeEventListener('MSFullscreenChange', handleFullScreenChange);
     };
-  }, []);
+  }, [isPlaying, isFullScreen, wasFullscreenBeforeTransition, userManuallyExitedFullscreen]);
 
   useEffect(() => {
     const keyPressHandler = (e) => {
@@ -394,31 +499,54 @@ const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
     return <div>Loading...</div>;
   }
 
-  const togglePlay = () => {
-    const wasPlaying = isPlaying;
-    setIsPlaying(!isPlaying);
-    
-    // Enter fullscreen when user starts playing for the first time
-    if (!wasPlaying && !isFullScreen && playerContainerRef.current) {
-      setTimeout(() => {
-        if (playerContainerRef.current.requestFullscreen) {
-          playerContainerRef.current.requestFullscreen().catch(err => {
-            console.log('Fullscreen request failed:', err);
-          });
-        } else if (playerContainerRef.current.mozRequestFullScreen) {
-          playerContainerRef.current.mozRequestFullScreen().catch(err => {
-            console.log('Fullscreen request failed:', err);
-          });
-        } else if (playerContainerRef.current.webkitRequestFullscreen) {
-          playerContainerRef.current.webkitRequestFullscreen().catch(err => {
-            console.log('Fullscreen request failed:', err);
-          });
-        } else if (playerContainerRef.current.msRequestFullscreen) {
-          playerContainerRef.current.msRequestFullscreen().catch(err => {
-            console.log('Fullscreen request failed:', err);
-          });
+  // Debug logging - check what we're actually getting
+  console.log('🎬 Player received video object:', video);
+  console.log('🎥 Final URL that will be used:', finalVideoUrl);
+  
+  if (!finalVideoUrl) {
+    console.error('❌ No video URL found! Video object:', video);
+  }
+
+  const togglePlay = async () => {
+    if (!isPlaying) {
+      try {
+        // Start video and try auto-fullscreen in same user gesture
+        const playPromise = videoRef.current.play();
+        
+        // Try auto-fullscreen if enabled and not already in fullscreen
+        if (!isFullScreen) {
+          const autoFullscreenSuccess = await fullscreenManager.tryAutoFullscreen(playerContainerRef.current, true);
+          if (autoFullscreenSuccess) {
+            console.log('✅ Auto-fullscreen activated with user permission');
+          } else {
+            console.log('ℹ️ Auto-fullscreen not activated (disabled, denied, or cancelled)');
+          }
         }
-      }, 100);
+        
+        // Wait for video to actually start
+        await playPromise;
+        setIsPlaying(true);
+        
+      } catch (error) {
+        console.error("Error attempting to play video:", error);
+        // Handle cases where autoplay is denied
+        if (error.name === 'NotAllowedError') {
+          // Try playing muted as browsers allow muted autoplay
+          try {
+            videoRef.current.muted = true;
+            setIsMuted(true);
+            await videoRef.current.play();
+            setIsPlaying(true);
+            setShowMutedNotice(true);
+            setTimeout(() => setShowMutedNotice(false), 3000);
+          } catch (mutedError) {
+            console.error("Error playing video even when muted:", mutedError);
+          }
+        }
+      }
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
     }
   };
 
@@ -510,27 +638,11 @@ const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const toggleFullScreen = () => {
-    if (!isFullScreen) {
-      if (playerContainerRef.current.requestFullscreen) {
-        playerContainerRef.current.requestFullscreen();
-      } else if (playerContainerRef.current.mozRequestFullScreen) { /* Firefox */
-        playerContainerRef.current.mozRequestFullScreen();
-      } else if (playerContainerRef.current.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-        playerContainerRef.current.webkitRequestFullscreen();
-      } else if (playerContainerRef.current.msRequestFullscreen) { /* IE/Edge */
-        playerContainerRef.current.msRequestFullscreen();
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.mozCancelFullScreen) { /* Firefox */
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) { /* IE/Edge */
-        document.msExitFullscreen();
-      }
+  const toggleFullScreen = async () => {
+    // Use the simplified toggle method
+    const success = await fullscreenManager.toggleFullscreen(playerContainerRef.current);
+    if (!success && !isFullScreen) {
+      console.log('Fullscreen request was not successful');
     }
   };
 
@@ -553,8 +665,29 @@ const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
       <video
         ref={videoRef}
         className="video-player"
-        src={video.videoSources ? video.videoSources[currentLanguage] : video.videoUrl}
+        crossOrigin="anonymous"
+        preload="auto"
+        src={finalVideoUrl}
         onClick={togglePlay}
+        onError={(e) => {
+          console.error('❌ Video element error:', e);
+          console.error('❌ Video error code:', e.target?.error?.code);
+          console.error('❌ Video error message:', e.target?.error?.message);
+          console.error('❌ Video src at time of error:', e.target?.src);
+        }}
+        onLoadStart={() => console.log('✅ Video load started')}
+        onCanPlay={() => console.log('✅ Video can play')}
+        onProgress={(e) => {
+          // Monitor buffering progress
+          if (videoRef.current && videoRef.current.buffered.length > 0) {
+            const bufferedEnd = videoRef.current.buffered.end(videoRef.current.buffered.length - 1);
+            const duration = videoRef.current.duration;
+            if (duration > 0) {
+              const bufferedPercent = (bufferedEnd / duration) * 100;
+              console.log(`📊 Buffered: ${bufferedPercent.toFixed(1)}%`);
+            }
+          }
+        }}
       />
       
       {isBuffering && (
@@ -696,6 +829,14 @@ const Player = forwardRef(({ video, onVideoEnd, autoPlay = false }, ref) => {
           <span>
             {skipFeedback.direction === 'restart' ? 'Restart' : `${skipFeedback.amount}s`}
           </span>
+        </div>
+      )}
+      
+      {/* Muted Notice */}
+      {showMutedNotice && (
+        <div className="muted-notice">
+          <i className="fas fa-volume-mute"></i>
+          <span>Playing muted - Click unmute button to enable sound</span>
         </div>
       )}
 
