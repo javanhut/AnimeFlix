@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: docker.io/postgres:15-alpine
+    container_name: animeflix-postgres
+    environment:
+      POSTGRES_DB: animeflix
+      POSTGRES_USER: animeflix_user
+      POSTGRES_PASSWORD: animeflix_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - animeflix-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U animeflix_user -d animeflix"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend Service
+  backend:
+    build:
+      context: ./animeflix-backend
+      dockerfile: Containerfile
+    container_name: animeflix-backend
+    environment:
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: animeflix
+      DB_USER: animeflix_user
+      DB_PASSWORD: animeflix_password
+      VIDEO_STORAGE_PATH: /app/videos
+      CACHE_PATH: /app/video-cache
+      CONTENT_PATH: /app/content
+    volumes:
+      # Persistent volumes for video storage
+      - video_storage:/app/videos
+      - video_cache:/app/video-cache
+      # Bind mount for easy content management during development
+      - ./animeflix-backend/content:/app/content:ro
+    ports:
+      - "3051:3051"
+    networks:
+      - animeflix-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./animeflix-frontend
+      dockerfile: Containerfile
+    container_name: animeflix-frontend
+    environment:
+      REACT_APP_API_URL: http://localhost:3051
+    ports:
+      - "3050:3050"
+    networks:
+      - animeflix-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Optional: Redis for caching (future enhancement)
+  redis:
+    image: docker.io/redis:7-alpine
+    container_name: animeflix-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - animeflix-network
+    restart: unless-stopped
+
+  # Optional: MinIO for S3-compatible object storage
+  minio:
+    image: docker.io/minio/minio:latest
+    container_name: animeflix-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: animeflix_admin
+      MINIO_ROOT_PASSWORD: animeflix_secret
+      MINIO_DEFAULT_BUCKETS: videos,thumbnails,backdrops
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - animeflix-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+networks:
+  animeflix-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    name: animeflix_postgres_data
+  video_storage:
+    name: animeflix_video_storage
+  video_cache:
+    name: animeflix_video_cache
+  redis_data:
+    name: animeflix_redis_data
+  minio_data:
+    name: animeflix_minio_data
